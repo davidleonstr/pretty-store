@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+&::-webkit-scrollbar {
+    display: none;
+}
+
+:root {
+  --ink: #4a1530;
+}
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Fredoka', system-ui, sans-serif;
+  color: var(--ink);
+  background-color: #ffe6ec;
+  /* Puntitos tipo trama de historieta */
+  background-image: radial-gradient(#f6b1c3 1.3px, transparent 1.6px);
+  background-size: 20px 20px;
+  min-height: 100vh;
+}
+
+@layer components {
+  /* Marco "dibujado": el borde vive en un pseudo-elemento con filtro ondulado */
+  .sketch {
+    position: relative;
+    background: #fff;
+    border-radius: 18px 26px 16px 28px / 26px 16px 28px 18px;
+    box-shadow: 5px 5px 0 var(--ink);
+  }
+  .sketch::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--ink);
+    border-radius: inherit;
+    filter: url(#wobble);
+    pointer-events: none;
+  }
+  .sketch-flat {
+    box-shadow: none;
+  }
+
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.25rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: #f192ad;
+    border-radius: 16px 22px 14px 24px / 22px 14px 24px 16px;
+    box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.15;
+    min-height: 48px;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid var(--ink);
+    border-radius: inherit;
+    filter: url(#wobble);
+    pointer-events: none;
+  }
+  .btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 6px 6px 0 var(--ink);
+  }
+  .btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .btn-white {
+    background: #fff;
+  }
+  .btn-deep {
+    background: #b8396a;
+    color: #fff;
+  }
+  .btn-soft {
+    background: #ffd5e0;
+  }
+  .btn-sm {
+    padding: 0.45rem 0.9rem;
+    min-height: 40px;
+    font-size: 0.9rem;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .field {
+    width: 100%;
+    background: #fff;
+    padding: 0.7rem 0.9rem;
+    border: 3px solid var(--ink);
+    border-radius: 14px 18px 12px 20px / 18px 12px 20px 14px;
+    outline: none;
+    transition: box-shadow 0.12s ease, background 0.12s ease;
+    min-height: 48px;
+    font-size: 16px; /* evita el zoom automático en iOS */
+  }
+  .field:focus {
+    background: #fff4f7;
+    box-shadow: 3px 3px 0 #f192ad;
+  }
+  .field-error {
+    border-color: #b8396a;
+    background: #ffe6ec;
+  }
+  .field::placeholder {
+    color: #b9708c;
+  }
+
+  /* Cartelito inclinado tipo sticker */
+  .sticker {
+    display: inline-block;
+    padding: 0.15rem 0.7rem;
+    font-family: 'Chewy', 'Fredoka', cursive;
+    background: #fff;
+    border: 2.5px solid var(--ink);
+    border-radius: 999px;
+    transform: rotate(-3deg);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+
+  /* Globo de diálogo */
+  .bubble {
+    position: relative;
+    display: inline-block;
+    background: #fff;
+    padding: 0.6rem 1rem;
+    border: 3px solid var(--ink);
+    border-radius: 22px 26px 22px 26px / 26px 22px 26px 22px;
+  }
+  .bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 28px;
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border-right: 3px solid var(--ink);
+    border-bottom: 3px solid var(--ink);
+    transform: rotate(45deg) skew(8deg, 8deg);
+  }
+
+  .skel {
+    background: #ffd5e0;
+    border: 2px dashed #f6b1c3;
+    border-radius: 14px;
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .h-title {
+    font-family: 'Chewy', 'Fredoka', cursive;
+    letter-spacing: 0.01em;
+    line-height: 1.05;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Espacio para la barra inferior en móvil y zona segura de iPhone */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
