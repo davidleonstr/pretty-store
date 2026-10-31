@@ -112,7 +112,7 @@ export default function Layout() {
             Pretty Store
           </span>
           <a
-            href="https://instagram.com/pretty.store.sv"
+            href="https://instagram.com/prettystore.site"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Instagram"
